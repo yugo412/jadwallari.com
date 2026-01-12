@@ -1,7 +1,7 @@
 import Database from 'better-sqlite3';
 import { env } from './env.js';
 
-const db: Database = new Database(env('DB_PATH'), {
+const db = new Database(env('DB_PATH'), {
   readonly: true,
 });
 
