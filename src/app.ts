@@ -11,6 +11,10 @@ app.use('*', async (c, next) => {
   await next();
 });
 
+app.all('/up', (c) => {
+  return c.body('OK');
+});
+
 app.get('/official/:slug', (c) => {
   const slug: string = c.req.param('slug').trim();
   if (!slug) {
