@@ -35,7 +35,19 @@ app.get('/event/:slug', (c) => {
 });
 
 app.get('/:slug', (c) => {
-  return c.redirect(redirectSchedule(c.req.param('slug')));
+  const slug: string = c.req.param('slug').trim();
+
+  const target = new URL(c.req.url);
+  target.host = new URL(mainUrl).host;
+  target.protocol = new URL(mainUrl).protocol;
+
+  const schedule: Schedule | null = findSchedule(slug);
+
+  if (schedule) {
+    return c.redirect(redirectSchedule(slug), 302);
+  }
+
+  return c.redirect(target.toString(), 301);
 });
 
 app.all('*', (c) => {
